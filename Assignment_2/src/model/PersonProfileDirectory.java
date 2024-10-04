@@ -52,16 +52,18 @@ public class PersonProfileDirectory {
     }
     
     public void searchProfile(String searchInput) {
-    searchResults.clear();  // Clear previous search results
-    String lowerSearchInput = searchInput.toLowerCase();
+        searchResults.clear();  // Clear previous search results
+        String lowerSearchInput = searchInput.toLowerCase();  // Make search input case-insensitive
 
-    for (PersonProfile p : profile) {
-        if ((p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerSearchInput)) ||
-            (p.getLastName() != null && p.getLastName().toLowerCase().contains(lowerSearchInput)) ||
-            (p.getHomeStreetAddress() != null && p.getHomeStreetAddress().toLowerCase().contains(lowerSearchInput)) ||
-            (p.getWorkStreetAddress() != null && p.getWorkStreetAddress().toLowerCase().contains(lowerSearchInput))) {
-            searchResults.add(p);  
+        for (PersonProfile p : profile) {
+            boolean firstNameMatch = p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerSearchInput);
+            boolean lastNameMatch = p.getLastName() != null && p.getLastName().toLowerCase().contains(lowerSearchInput);
+            boolean homeStreetMatch = p.getHomeStreetAddress() != null && p.getHomeStreetAddress().toLowerCase().contains(lowerSearchInput);
+            boolean workStreetMatch = p.getWorkStreetAddress() != null && p.getWorkStreetAddress().toLowerCase().contains(lowerSearchInput);
+
+            if (firstNameMatch || lastNameMatch || homeStreetMatch || workStreetMatch) {
+                searchResults.add(p);  // Add matching profile to search results
+            }
         }
-    }
     }
 }

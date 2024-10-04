@@ -479,13 +479,13 @@ public class ViewPersonProfileJPanel extends javax.swing.JPanel {
         return;
     }
 
-    if (HomeZipCode < 10000 || HomeZipCode > 9999999) {
-        JOptionPane.showMessageDialog(this, "Home ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+    if (String.valueOf(HomeZipCode).length() != 5 && String.valueOf(HomeZipCode).length() != 7) {
+        JOptionPane.showMessageDialog(this, "Home ZIP code must be 5 or 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    if (WorkZipCode < 10000 || WorkZipCode > 9999999) {
-        JOptionPane.showMessageDialog(this, "Work ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+    if (String.valueOf(WorkZipCode).length() != 5 && String.valueOf(WorkZipCode).length() != 7) {
+        JOptionPane.showMessageDialog(this, "Work ZIP code must be 5 or 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -517,10 +517,13 @@ public class ViewPersonProfileJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         workAreaJPanel.remove(this);
-
-       // Refresh the parent container
         Component[] panelStack = workAreaJPanel.getComponents();
-        JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
+        for (Component comp : panelStack) {
+            if (comp instanceof ListPersonProfileJPanel) {
+                ListPersonProfileJPanel listPanel = (ListPersonProfileJPanel) comp;
+                listPanel.refreshPersonProfileList();  // Refresh the list after the update
+            }
+        }
 
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.previous(workAreaJPanel);

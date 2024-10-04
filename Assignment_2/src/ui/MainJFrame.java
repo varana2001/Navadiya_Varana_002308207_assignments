@@ -314,7 +314,7 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile3.setLastName("Desai");
         newProfile3.setSsn(123987456);
         newProfile3.setAge(32);
-        newProfile2.setGender('M');
+        newProfile3.setGender('M');
         newProfile3.setHomeStreetAddress("234 Beacon St");
         newProfile3.setHomeUnitNumber("Apt 4B");
         newProfile3.setHomeCity("Newton");
@@ -334,7 +334,7 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile4.setLastName("Patel");
         newProfile4.setSsn(567890123);
         newProfile4.setAge(26);
-        newProfile2.setGender('F');
+        newProfile4.setGender('F');
         newProfile4.setHomeStreetAddress("567 Commonwealth Ave");
         newProfile4.setHomeUnitNumber("Apt 7A");
         newProfile4.setHomeCity("Brookline");
@@ -354,7 +354,7 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile5.setLastName("Joshi");
         newProfile5.setSsn(112233445);
         newProfile5.setAge(29);
-        newProfile2.setGender('M');
+        newProfile5.setGender('M');
         newProfile5.setHomeStreetAddress("789 Washington St");
         newProfile5.setHomeUnitNumber("Apt 12");
         newProfile5.setHomeCity("Somerville");

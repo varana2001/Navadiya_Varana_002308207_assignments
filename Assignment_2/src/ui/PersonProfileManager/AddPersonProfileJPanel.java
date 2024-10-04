@@ -382,13 +382,13 @@ public class AddPersonProfileJPanel extends javax.swing.JPanel {
             return;
         }
 
-        if (HomeZipCode < 10000 || HomeZipCode > 9999999) {
-            JOptionPane.showMessageDialog(this, "Home ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+        if (String.valueOf(HomeZipCode).length() != 5 && String.valueOf(HomeZipCode).length() != 7) {
+            JOptionPane.showMessageDialog(this, "Home ZIP code must be 5 or 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (WorkZipCode < 10000 || WorkZipCode > 9999999) {
-            JOptionPane.showMessageDialog(this, "Work ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+        if (String.valueOf(WorkZipCode).length() != 5 && String.valueOf(WorkZipCode).length() != 7) {
+            JOptionPane.showMessageDialog(this, "Work ZIP code must be 5 or 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
