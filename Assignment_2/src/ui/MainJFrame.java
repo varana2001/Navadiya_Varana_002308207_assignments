@@ -9,7 +9,6 @@ import model.PersonProfileDirectory;
 import ui.PersonProfileManager.AddPersonProfileJPanel;
 import ui.PersonProfileManager.ListPersonProfileJPanel;
 import javax.swing.JOptionPane;
-import model.Address;
 import model.PersonProfile;
 
 /**
@@ -141,36 +140,21 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddPersonProfileJPanel panel = new AddPersonProfileJPanel(workAreaJPanel, profileDirectory);
         workAreaJPanel.add("AddPersonJPanel", panel);
+
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.next(workAreaJPanel);
     }//GEN-LAST:event_btnAddPersonActionPerformed
 
     private void txtSearchPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchPersonActionPerformed
         // TODO add your handling code here:
-        String searchTerm = txtSearchPerson.getText().trim();
-        if (searchTerm.isEmpty() || searchTerm.equals("Enter name or address")) {
-            JOptionPane.showMessageDialog(this, "Please enter a search term", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
-        // Search in the directory
-        PersonProfile foundPerson = profileDirectory.searchPersonProfile(searchTerm);
-
-        if (foundPerson == null) {
-            JOptionPane.showMessageDialog(this, "No matching person found.", "Search Results", JOptionPane.PLAIN_MESSAGE);
-        } else {
-            ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, foundPerson);
-            workAreaJPanel.add("ListPersonJPanel", panel);
-            CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
-            layout.next(workAreaJPanel);
-
-        }
     }//GEN-LAST:event_txtSearchPersonActionPerformed
 
     private void btnListPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListPersonActionPerformed
         // TODO add your handling code here:
-        ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, profileDirectory);
+        ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, profileDirectory, false);
         workAreaJPanel.add("ListPersonJPanel", panel);
+
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.next(workAreaJPanel);
     }//GEN-LAST:event_btnListPersonActionPerformed
@@ -222,34 +206,105 @@ public class MainJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void demoData() {
-        PersonProfile person1 = new PersonProfile();
-        person1.setFirstName("John");
-        person1.setLastName("Doe");
-        person1.setAge(28);
-        person1.setGender('M');
-        person1.setSsn(123456789);
+        PersonProfile newProfile1 = new PersonProfile();
+        newProfile1.setFirstName("Varana");
+        newProfile1.setLastName("Navadiya");
+        newProfile1.setSsn(123456789);
+        newProfile1.setAge(23);
+        newProfile1.setGender('F');
+        newProfile1.setHomeStreetAddress("110 Warren St");
+        newProfile1.setHomeUnitNumber("Apt 2");
+        newProfile1.setHomeCity("Boston");
+        newProfile1.setHomeState("MA");
+        newProfile1.setHomeZipCode(02135);
+        newProfile1.setHomePhoneNumber("1234567890");
+        newProfile1.setWorkStreetAddress("50 Islan View");
+        newProfile1.setWorkUnitNumber("Apt 601");
+        newProfile1.setWorkCity("Boston");
+        newProfile1.setWorkState("MA");
+        newProfile1.setWorkZipCode(02125);
+        newProfile1.setWorkPhoneNumber("0000000000");
+        profileDirectory.addProfile(newProfile1);
+
+        PersonProfile newProfile2 = new PersonProfile();
+        newProfile2.setFirstName("Megha");
+        newProfile2.setLastName("Shah");
+        newProfile2.setSsn(987654321);
+        newProfile2.setAge(28);
+        newProfile2.setGender('F');
+        newProfile2.setHomeStreetAddress("15 Cambridge St");
+        newProfile2.setHomeUnitNumber("Apt 9");
+        newProfile2.setHomeCity("Boston");
+        newProfile2.setHomeState("MA");
+        newProfile2.setHomeZipCode(02134);
+        newProfile2.setHomePhoneNumber("0987654321");
+        newProfile2.setWorkStreetAddress("200 Harvard Ave");
+        newProfile2.setWorkUnitNumber("Suite 300");
+        newProfile2.setWorkCity("Cambridge");
+        newProfile2.setWorkState("MA");
+        newProfile2.setWorkZipCode(02125);
+        newProfile2.setWorkPhoneNumber("9876543210");
+        profileDirectory.addProfile(newProfile2);
         
-        // Set Home Address
-        Address homeAddress = new Address();
-        homeAddress.setStreetAddress("123 Elm St");
-        homeAddress.setCity("New York");
-        homeAddress.setState("NY");
-        homeAddress.setZip("10001");
-        person1.setHomeAddress(homeAddress);
-
-        // Set Work Address
-        Address workAddress = new Address();
-        workAddress.setStreetAddress("456 Oak Ave");
-        workAddress.setCity("New York");
-        workAddress.setState("NY");
-        workAddress.setZip("10002");
-        person1.setWorkAddress(workAddress);
-
-        profileDirectory.addPersonProfile(person1);
+        PersonProfile newProfile3 = new PersonProfile();
+        newProfile3.setFirstName("Raj");
+        newProfile3.setLastName("Desai");
+        newProfile3.setSsn(123987456);
+        newProfile3.setAge(32);
+        newProfile2.setGender('M');
+        newProfile3.setHomeStreetAddress("234 Beacon St");
+        newProfile3.setHomeUnitNumber("Apt 4B");
+        newProfile3.setHomeCity("Newton");
+        newProfile3.setHomeState("MA");
+        newProfile3.setHomeZipCode(02115);
+        newProfile3.setHomePhoneNumber("1239876543");
+        newProfile3.setWorkStreetAddress("500 Main St");
+        newProfile3.setWorkUnitNumber("Office 501");
+        newProfile3.setWorkCity("Boston");
+        newProfile3.setWorkState("MA");
+        newProfile3.setWorkZipCode(02110);
+        newProfile3.setWorkPhoneNumber("1230004567");
+        profileDirectory.addProfile(newProfile3);
+        
+        PersonProfile newProfile4 = new PersonProfile();
+        newProfile4.setFirstName("Pooja");
+        newProfile4.setLastName("Patel");
+        newProfile4.setSsn(567890123);
+        newProfile4.setAge(26);
+        newProfile2.setGender('F');
+        newProfile4.setHomeStreetAddress("567 Commonwealth Ave");
+        newProfile4.setHomeUnitNumber("Apt 7A");
+        newProfile4.setHomeCity("Brookline");
+        newProfile4.setHomeState("MA");
+        newProfile4.setHomeZipCode(02446);
+        newProfile4.setHomePhoneNumber("5678901234");
+        newProfile4.setWorkStreetAddress("150 Boylston St");
+        newProfile4.setWorkUnitNumber("Suite 700");
+        newProfile4.setWorkCity("Boston");
+        newProfile4.setWorkState("MA");
+        newProfile4.setWorkZipCode(02116);
+        newProfile4.setWorkPhoneNumber("5678904321");
+        profileDirectory.addProfile(newProfile4);
+        
+        PersonProfile newProfile5 = new PersonProfile();
+        newProfile5.setFirstName("Kunal");
+        newProfile5.setLastName("Joshi");
+        newProfile5.setSsn(112233445);
+        newProfile5.setAge(29);
+        newProfile2.setGender('M');
+        newProfile5.setHomeStreetAddress("789 Washington St");
+        newProfile5.setHomeUnitNumber("Apt 12");
+        newProfile5.setHomeCity("Somerville");
+        newProfile5.setHomeState("MA");
+        newProfile5.setHomeZipCode(02145);
+        newProfile5.setHomePhoneNumber("1122334455");
+        newProfile5.setWorkStreetAddress("100 State St");
+        newProfile5.setWorkUnitNumber("Floor 5");
+        newProfile5.setWorkCity("Boston");
+        newProfile5.setWorkState("MA");
+        newProfile5.setWorkZipCode(02116);
+        newProfile5.setWorkPhoneNumber("1122330099");
+        profileDirectory.addProfile(newProfile5);
+        
     }
-
-
-
-
-
 }

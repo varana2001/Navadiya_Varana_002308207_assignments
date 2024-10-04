@@ -4,17 +4,27 @@
  */
 package ui.PersonProfileManager;
 
+import javax.swing.JPanel;
+import model.PersonProfileDirectory;
+
 /**
  *
  * @author varananavadiya
  */
 public class ListPersonProfileJPanel extends javax.swing.JPanel {
-
+    private PersonProfileDirectory profileDirectory;
+    JPanel workAreaJPanel;
+    private boolean showSearchResults;
     /**
      * Creates new form ListPersonProfileJPanel
      */
-    public ListPersonProfileJPanel() {
+    public ListPersonProfileJPanel(JPanel workAreaJPanel,ProfileDirectory profileDirectory, boolean searchresult) {
         initComponents();
+        this.workAreaJPanel = workAreaJPanel;
+        this.profileDirectory = profileDirectory;
+        this.showSearchResults = searchresult;
+        System.out.println("Show search results: " + showSearchResults);
+        populateTable();
     }
 
     /**

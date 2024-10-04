@@ -4,8 +4,9 @@
  */
 package ui.PersonProfileManager;
 
+import java.awt.CardLayout;
 import javax.swing.JOptionPane;
-import model.Address;
+import javax.swing.JPanel;
 import model.PersonProfile;
 import model.PersonProfileDirectory;
 
@@ -14,12 +15,16 @@ import model.PersonProfileDirectory;
  * @author varananavadiya
  */
 public class AddPersonProfileJPanel extends javax.swing.JPanel {
-    private PersonProfileDirectory profileDirectory;
+
+    PersonProfileDirectory profileDirectory;
+    JPanel workAreaJPanel;
+
     /**
      * Creates new form AddPersonProfileJPanel
      */
-    public AddPersonProfileJPanel(PersonProfileDirectory profileDirectory) {
+    public AddPersonProfileJPanel(JPanel workAreaJPanel, PersonProfileDirectory profileDirectory) {
         initComponents();
+        this.workAreaJPanel = workAreaJPanel;
         this.profileDirectory = profileDirectory;
     }
 
@@ -302,79 +307,119 @@ public class AddPersonProfileJPanel extends javax.swing.JPanel {
 
     private void btnCreateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateProfileActionPerformed
         // TODO add your handling code here:
-                String fName = txtFName.getText();
+        String fName = txtFName.getText();
         String lName = txtLName.getText();
         String ssn = txtSSN.getText();
         String age = txtAge.getText();
-        String genderInput = txtGender.getText();
-        
-        // Validate gender
-        if (genderInput.length() != 1) {
-            JOptionPane.showMessageDialog(this, "Gender must be a single character (M/F)", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        char gender = genderInput.charAt(0);  // Gender as char
-        
-        // Home address inputs
-        String homeStreet = txtHAddress.getText();
-        String homeUnit = txtHUnit.getText();
+        String homeStreetAddress = txtHAddress.getText();
+        String homeUnitNumber = txtHUnit.getText();
         String homeCity = txtHCity.getText();
         String homeState = txtHState.getText();
-        String homeZip = txtHZip.getText();
-        String homePhone = txtHPhoneNumber.getText();
-        
-        // Work address inputs
-        String workStreet = txtWAddress.getText();
-        String workUnit = txtWUnit.getText();
+        String homeZipCode = txtHZip.getText();
+        String homePhoneNumber = txtHPhoneNumber.getText();
+        String workStreetAddress = txtWAddress.getText();
+        String workUnitNumber = txtWUnit.getText();
         String workCity = txtWCity.getText();
         String workState = txtWState.getText();
-        String workZip = txtWZip.getText();
-        String workPhone = txtWPhoneNumber.getText();
-        
-        // Validate required fields
-        if (fName.isBlank() || lName.isBlank() || ssn.isBlank() || age.isBlank() ||
-            homeStreet.isBlank() || homeCity.isBlank() || homeState.isBlank() ||
-            homeZip.isBlank() || homePhone.isBlank() || workStreet.isBlank() ||
-            workCity.isBlank() || workState.isBlank() || workZip.isBlank() || workPhone.isBlank()) {
-            JOptionPane.showMessageDialog(this, "All fields are required", "Error", JOptionPane.ERROR_MESSAGE);
+        String workZipCode = txtWZip.getText();
+        String workPhoneNumber = txtWPhoneNumber.getText();
+        String genderInput = txtGender.getText();
+
+        if (fName.isBlank() || lName.isBlank() || ssn.isBlank() || age.isBlank() || homeStreetAddress.isBlank() || homeUnitNumber.isBlank() || homeState.isBlank() || homeCity.isBlank() || homeZipCode.isBlank() || homePhoneNumber.isBlank() || workStreetAddress.isBlank() || workCity.isBlank() || workState.isBlank() || workZipCode.isBlank() || workPhoneNumber.isBlank() || workUnitNumber.isBlank() || genderInput.isBlank()) {
+            JOptionPane.showMessageDialog(this, "All the fields are required", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        int Age, HomeZipCode, WorkZipCode;
+        long ssNumber;
+        float anIncome;
+        char gender;
 
-        // Validate phone numbers
-        if (homePhone.length() != 10 || workPhone.length() != 10) {
-            JOptionPane.showMessageDialog(this, "Phone numbers must be 10 digits", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Parse and validate numeric fields
-        long ssnNumber;
-        int ageNumber, homeZipCode, workZipCode;
         try {
-            ssnNumber = Long.parseLong(ssn);  // Parse SSN as long
-            ageNumber = Integer.parseInt(age);  // Parse age as integer
-            homeZipCode = Integer.parseInt(homeZip);  // Parse home ZIP code as integer
-            workZipCode = Integer.parseInt(workZip);  // Parse work ZIP code as integer
+            ssNumber = Long.parseLong(ssn);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter valid numeric values for SSN, age, and zip codes", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric SSN", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validate SSN length
+        try {
+            Age = Integer.parseInt(age);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric Age", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            HomeZipCode = Integer.parseInt(homeZipCode);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric Home ZIP code", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            WorkZipCode = Integer.parseInt(workZipCode);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric Work ZIP code", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         if (ssn.length() != 9) {
-            JOptionPane.showMessageDialog(this, "SSN must be 9 digits", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "SSN must have 9 numeric digits", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+        if (homePhoneNumber.length() != 10) {
+            JOptionPane.showMessageDialog(this, "Home Phone Number must be 10 digits", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Create Address objects for Home and Work
-        Address homeAddress = new Address(homeStreet, homeCity, homeZipCode);
-        Address workAddress = new Address(workStreet, workCity, workZipCode);
+        if (workPhoneNumber.length() != 10) {
+            JOptionPane.showMessageDialog(this, "Work Phone Number must be 10 digits", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Create PersonProfile and add to the directory
-        PersonProfile newProfile = new PersonProfile(fName, lName, ageNumber, gender, ssnNumber, homeAddress, workAddress, homePhone, workPhone);
-        profileDirectory.addProfile(newProfile);
+        if (Age < 0 || Age > 120) {
+            JOptionPane.showMessageDialog(this, "Age must be between 0 and 120", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        JOptionPane.showMessageDialog(this, "Profile created successfully!", "Success", JOptionPane.PLAIN_MESSAGE);
+        if (HomeZipCode < 10000 || HomeZipCode > 9999999) {
+            JOptionPane.showMessageDialog(this, "Home ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        if (WorkZipCode < 10000 || WorkZipCode > 9999999) {
+            JOptionPane.showMessageDialog(this, "Work ZIP code must be between 5 and 7 digits", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (genderInput.length() != 1 || !(genderInput.equalsIgnoreCase("M") || genderInput.equalsIgnoreCase("F"))) {
+            JOptionPane.showMessageDialog(this, "Gender must be 'M' or 'F'", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            gender = genderInput.charAt(0);
+        }
+
+        // Creating a new profile
+        PersonProfile pp = profileDirectory.addProfile();
+        pp.setFirstName(fName);
+        pp.setLastName(lName);
+        pp.setSsn(ssNumber);
+        pp.setAge(Age);
+        pp.setGender(gender);
+        pp.setHomeStreetAddress(homeStreetAddress);
+        pp.setHomeUnitNumber(homeUnitNumber);
+        pp.setHomeCity(homeCity);
+        pp.setHomeState(homeState);
+        pp.setHomeZipCode(HomeZipCode);
+        pp.setHomePhoneNumber(homePhoneNumber);
+        pp.setWorkStreetAddress(workStreetAddress);
+        pp.setWorkUnitNumber(workUnitNumber);
+        pp.setWorkCity(workCity);
+        pp.setWorkState(workState);
+        pp.setWorkZipCode(WorkZipCode);
+        pp.setWorkPhoneNumber(workPhoneNumber);
+  
+        JOptionPane.showMessageDialog(this, "Profile created ", "Success", JOptionPane.PLAIN_MESSAGE);
         // Clear input fields after successful profile creation
         txtFName.setText("");
         txtLName.setText("");
@@ -398,6 +443,9 @@ public class AddPersonProfileJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        workAreaJPanel.remove(this);
+        CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
+        layout.previous(workAreaJPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
