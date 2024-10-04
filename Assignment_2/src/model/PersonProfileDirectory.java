@@ -12,43 +12,56 @@ import java.util.ArrayList;
  */
 public class PersonProfileDirectory {
 
-    private ArrayList<PersonProfile> personProfiles;
+    private ArrayList<PersonProfile> profile;
+    private ArrayList<PersonProfile> searchResults;
 
-    public PersonProfileDirectory() {
-        this.personProfiles = new ArrayList<>();
+    public ArrayList<PersonProfile> getSearchResults() {
+        return searchResults;
     }
 
-    public ArrayList<PersonProfile> getPersonProfiles() {
-        return personProfiles;
+    public void setSearchResults(ArrayList<PersonProfile> searchResults) {
+        this.searchResults = searchResults;
+    }
+    
+    public PersonProfileDirectory(){
+        this.profile=new ArrayList<PersonProfile>();
+        this.searchResults = new ArrayList<>();
     }
 
-    public void setPersonProfiles(ArrayList<PersonProfile> personProfiles) {
-        this.personProfiles = personProfiles;
+    public ArrayList<PersonProfile> getProfile() {
+        return profile;
     }
 
-    // Method to add a new person profile
-    public PersonProfile addPersonProfile() {
+    public void setProfile(ArrayList<PersonProfile> profile) {
+        this.profile = profile;
+    }
+    
+    public PersonProfile addProfile(){
         PersonProfile p = new PersonProfile();
-        personProfiles.add(p);
+        profile.add(p);
         return p;
     }
-
-    // Method to delete a person profile
-    public void deletePersonProfile(PersonProfile personProfile) {
-        personProfiles.remove(personProfile);
+    
+    public void addProfile(PersonProfile newProfile) {
+    profile.add(newProfile);
+}   
+    
+    public void deleteProfile(PersonProfile aProfile)
+    {
+        profile.remove(aProfile);
     }
+    
+    public void searchProfile(String searchInput) {
+    searchResults.clear();  // Clear previous search results
+    String lowerSearchInput = searchInput.toLowerCase();
 
-    // Method to search for a person by first name, last name, or street address
-    public PersonProfile searchPersonProfile(String searchTerm) {
-        for (PersonProfile p : personProfiles) {
-            if (p.getFirstName().equalsIgnoreCase(searchTerm)
-                    || p.getLastName().equalsIgnoreCase(searchTerm)
-                    || p.getHomeAddress().getStreetAddress().equalsIgnoreCase(searchTerm)
-                    || p.getWorkAddress().getStreetAddress().equalsIgnoreCase(searchTerm)
-                    ) {
-                return p;
-            }
+    for (PersonProfile p : profile) {
+        if ((p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerSearchInput)) ||
+            (p.getLastName() != null && p.getLastName().toLowerCase().contains(lowerSearchInput)) ||
+            (p.getHomeStreetAddress() != null && p.getHomeStreetAddress().toLowerCase().contains(lowerSearchInput)) ||
+            (p.getWorkStreetAddress() != null && p.getWorkStreetAddress().toLowerCase().contains(lowerSearchInput))) {
+            searchResults.add(p);  
         }
-        return null; // No match found
+    }
     }
 }

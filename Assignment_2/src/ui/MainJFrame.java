@@ -4,17 +4,29 @@
  */
 package ui;
 
+import java.awt.CardLayout;
+import model.PersonProfileDirectory;
+import ui.PersonProfileManager.AddPersonProfileJPanel;
+import ui.PersonProfileManager.ListPersonProfileJPanel;
+import javax.swing.JOptionPane;
+import model.Address;
+import model.PersonProfile;
+
 /**
  *
  * @author varananavadiya
  */
 public class MainJFrame extends javax.swing.JFrame {
 
+    private PersonProfileDirectory profileDirectory;
+
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
+        this.profileDirectory = new PersonProfileDirectory();
+        demoData();
     }
 
     /**
@@ -32,7 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnAddPerson = new javax.swing.JButton();
         btnListPerson = new javax.swing.JButton();
         btnSearchPerson = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearchPerson = new javax.swing.JTextField();
         workAreaJPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,15 +65,20 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btnListPerson.setText("List Person");
+        btnListPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListPersonActionPerformed(evt);
+            }
+        });
 
         btnSearchPerson.setText("Search for Person");
 
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Type name or street address");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtSearchPerson.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchPerson.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSearchPerson.setText("Type name or street address");
+        txtSearchPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtSearchPersonActionPerformed(evt);
             }
         });
 
@@ -79,7 +96,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnListPerson)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSearchPerson)
                 .addGap(172, 172, 172))
@@ -93,23 +110,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(btnAddPerson)
                     .addComponent(btnListPerson)
                     .addComponent(btnSearchPerson)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSearchPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         splitPane1.setTopComponent(menuJPanel);
 
-        javax.swing.GroupLayout workAreaJPanelLayout = new javax.swing.GroupLayout(workAreaJPanel);
-        workAreaJPanel.setLayout(workAreaJPanelLayout);
-        workAreaJPanelLayout.setHorizontalGroup(
-            workAreaJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1119, Short.MAX_VALUE)
-        );
-        workAreaJPanelLayout.setVerticalGroup(
-            workAreaJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 875, Short.MAX_VALUE)
-        );
-
+        workAreaJPanel.setLayout(new java.awt.CardLayout());
         splitPane1.setRightComponent(workAreaJPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,11 +139,41 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnAddPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPersonActionPerformed
         // TODO add your handling code here:
+        AddPersonProfileJPanel panel = new AddPersonProfileJPanel(workAreaJPanel, profileDirectory);
+        workAreaJPanel.add("AddPersonJPanel", panel);
+        CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
+        layout.next(workAreaJPanel);
     }//GEN-LAST:event_btnAddPersonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtSearchPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchPersonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        String searchTerm = txtSearchPerson.getText().trim();
+        if (searchTerm.isEmpty() || searchTerm.equals("Enter name or address")) {
+            JOptionPane.showMessageDialog(this, "Please enter a search term", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Search in the directory
+        PersonProfile foundPerson = profileDirectory.searchPersonProfile(searchTerm);
+
+        if (foundPerson == null) {
+            JOptionPane.showMessageDialog(this, "No matching person found.", "Search Results", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, foundPerson);
+            workAreaJPanel.add("ListPersonJPanel", panel);
+            CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
+            layout.next(workAreaJPanel);
+
+        }
+    }//GEN-LAST:event_txtSearchPersonActionPerformed
+
+    private void btnListPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListPersonActionPerformed
+        // TODO add your handling code here:
+        ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, profileDirectory);
+        workAreaJPanel.add("ListPersonJPanel", panel);
+        CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
+        layout.next(workAreaJPanel);
+    }//GEN-LAST:event_btnListPersonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,10 +214,42 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAddPerson;
     private javax.swing.JButton btnListPerson;
     private javax.swing.JButton btnSearchPerson;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel menuJPanel;
     private javax.swing.JSplitPane splitPane1;
+    private javax.swing.JTextField txtSearchPerson;
     private javax.swing.JPanel workAreaJPanel;
     // End of variables declaration//GEN-END:variables
+
+    private void demoData() {
+        PersonProfile person1 = new PersonProfile();
+        person1.setFirstName("John");
+        person1.setLastName("Doe");
+        person1.setAge(28);
+        person1.setGender('M');
+        person1.setSsn(123456789);
+        
+        // Set Home Address
+        Address homeAddress = new Address();
+        homeAddress.setStreetAddress("123 Elm St");
+        homeAddress.setCity("New York");
+        homeAddress.setState("NY");
+        homeAddress.setZip("10001");
+        person1.setHomeAddress(homeAddress);
+
+        // Set Work Address
+        Address workAddress = new Address();
+        workAddress.setStreetAddress("456 Oak Ave");
+        workAddress.setCity("New York");
+        workAddress.setState("NY");
+        workAddress.setZip("10002");
+        person1.setWorkAddress(workAddress);
+
+        profileDirectory.addPersonProfile(person1);
+    }
+
+
+
+
+
 }
