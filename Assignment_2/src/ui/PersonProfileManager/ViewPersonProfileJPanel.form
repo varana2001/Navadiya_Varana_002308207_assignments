@@ -24,13 +24,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="btnSave" min="-2" pref="147" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="btnUpdate" min="-2" pref="147" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="332" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
@@ -96,6 +89,12 @@
                           <Component id="txtHUnit" alignment="0" min="-2" pref="208" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnSave" min="-2" pref="147" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="btnUpdate" min="-2" pref="147" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -104,7 +103,7 @@
                   <EmptySpace min="-2" pref="227" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="txtHAddress" alignment="1" min="-2" pref="208" max="-2" attributes="0"/>
-                      <Component id="txtCity" alignment="1" min="-2" pref="208" max="-2" attributes="0"/>
+                      <Component id="txtHCity" alignment="1" min="-2" pref="208" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="lblHomeAddress" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="220" pref="220" max="-2" attributes="0"/>
@@ -203,7 +202,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtHAddress" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtCity" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHCity" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -372,7 +371,7 @@
         <Property name="text" type="java.lang.String" value="Phone Number"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCity">
+    <Component class="javax.swing.JTextField" name="txtHCity">
     </Component>
     <Component class="javax.swing.JTextField" name="txtWCity">
     </Component>
@@ -388,6 +387,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt;&lt; Back"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

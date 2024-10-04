@@ -24,6 +24,20 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     public MainJFrame() {
         initComponents();
+        txtSearchPerson.addFocusListener(new java.awt.event.FocusAdapter() {
+    public void focusGained(java.awt.event.FocusEvent evt) {
+        if (txtSearchPerson.getText().equals("Type name or street address")) {
+            txtSearchPerson.setText("");
+            txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); // Set text color to black
+        }
+    }
+    public void focusLost(java.awt.event.FocusEvent evt) {
+        if (txtSearchPerson.getText().trim().isEmpty()) {
+            txtSearchPerson.setForeground(new java.awt.Color(204, 204, 204)); // Set text color back to gray
+            txtSearchPerson.setText("Type name or street address");
+        }
+    }
+});
         this.profileDirectory = new PersonProfileDirectory();
         demoData();
     }
@@ -45,6 +59,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnSearchPerson = new javax.swing.JButton();
         txtSearchPerson = new javax.swing.JTextField();
         workAreaJPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +86,11 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btnSearchPerson.setText("Search for Person");
+        btnSearchPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPersonActionPerformed(evt);
+            }
+        });
 
         txtSearchPerson.setForeground(new java.awt.Color(204, 204, 204));
         txtSearchPerson.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -116,6 +136,12 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane1.setTopComponent(menuJPanel);
 
         workAreaJPanel.setLayout(new java.awt.CardLayout());
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("WELCOME TO PERSON PROFILE!");
+        workAreaJPanel.add(jLabel1, "card2");
+
         splitPane1.setRightComponent(workAreaJPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,9 +173,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void txtSearchPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchPersonActionPerformed
         // TODO add your handling code here:
-
+        if (txtSearchPerson.getForeground().equals(new java.awt.Color(204, 204, 204))) {
+        txtSearchPerson.setText(""); // Clear text
+        txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); // Set text color to black
+    }
     }//GEN-LAST:event_txtSearchPersonActionPerformed
 
+    
     private void btnListPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListPersonActionPerformed
         // TODO add your handling code here:
         ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, profileDirectory, false);
@@ -158,6 +188,38 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.next(workAreaJPanel);
     }//GEN-LAST:event_btnListPersonActionPerformed
+
+    private void btnSearchPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPersonActionPerformed
+        // TODO add your handling code here:
+        String searchInput = txtSearchPerson.getText().trim();  
+        if (searchInput.isEmpty()) {
+
+           JOptionPane.showMessageDialog(this, "Please enter a search term.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }else{
+
+        profileDirectory.searchProfile(searchInput);  
+        for (PersonProfile p : profileDirectory.getSearchResults()) {
+            // Print attributes of the PersonalProfile object
+            System.out.println("First Name: " + p.getFirstName());
+            System.out.println("Last Name: " + p.getLastName());
+            System.out.println("Age: " + p.getAge());
+        }
+        
+        if (profileDirectory.getSearchResults().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "No matching profiles found.", "Search Results", JOptionPane.PLAIN_MESSAGE);
+        } else {
+          
+            ListPersonProfileJPanel panel = new ListPersonProfileJPanel(workAreaJPanel, profileDirectory, true);  
+            workAreaJPanel.add("ListPersonProfileJPanel", panel);
+           
+            CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
+            layout.next(workAreaJPanel);
+            txtSearchPerson.setText("");
+        }
+    }
+    }//GEN-LAST:event_btnSearchPersonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +260,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAddPerson;
     private javax.swing.JButton btnListPerson;
     private javax.swing.JButton btnSearchPerson;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel menuJPanel;
     private javax.swing.JSplitPane splitPane1;

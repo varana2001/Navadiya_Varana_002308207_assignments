@@ -53,8 +53,8 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1119, 875));
 
         lblTitle.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("List Person");
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitle.setText("                                                                   List Person");
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,16 +94,16 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(btnBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1119, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 1002, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(271, 271, 271)
+                .addGap(432, 432, 432)
                 .addComponent(btnView)
-                .addGap(82, 82, 82)
+                .addGap(35, 35, 35)
                 .addComponent(btnDelete)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -115,11 +115,11 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
                     .addComponent(btnBack))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99)
+                .addGap(90, 90, 90)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnView)
-                    .addComponent(btnDelete))
-                .addGap(0, 264, Short.MAX_VALUE))
+                    .addComponent(btnDelete)
+                    .addComponent(btnView))
+                .addGap(0, 273, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -136,7 +136,7 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
     PersonProfile selectedProfile = profilesToShow.get(selectedRowIndex);
     
  
-    ViewPersonProfileJPanel viewPanel = new ViewPersonProfileJPanel(workAreaJPanel, selectedProfile);
+    ViewPersonProfileJPanel viewPanel = new ViewPersonProfileJPanel(workAreaJPanel, profileDirectory,selectedProfile );
     workAreaJPanel.add("ViewJPanel", viewPanel);
     
  
