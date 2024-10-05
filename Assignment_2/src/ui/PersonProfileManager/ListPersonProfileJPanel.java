@@ -146,31 +146,43 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-                workAreaJPanel.remove(this);
+    workAreaJPanel.remove(this);
 
-       // Refresh the parent container
+        // Get the previous panel from the stack
         Component[] panelStack = workAreaJPanel.getComponents();
         JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
 
+        // Check if the last panel is an instance of ListPersonProfileJPanel
+        if (lastPanel instanceof ListPersonProfileJPanel) {
+            ListPersonProfileJPanel listPanel = (ListPersonProfileJPanel) lastPanel;
+            listPanel.refreshPersonProfileList();  // Call method to refresh the list
+        }
+
+        // Navigate back to the previous panel
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.previous(workAreaJPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    int selectedRow = jTable.getSelectedRow();
-        if (selectedRow >= 0) {
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this profile?", "Warning", JOptionPane.WARNING_MESSAGE);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
-                PersonProfile selectedProfile = profilesToShow.get(selectedRow);
-                profileDirectory.deleteProfile(selectedProfile);
-                refreshPersonProfileList();  // Refresh the list after deletion
+        int selectedRow = jTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this profile?", "Warning", JOptionPane.WARNING_MESSAGE);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
+                    PersonProfile selectedProfile = profilesToShow.get(selectedRow);
+
+                    // Remove from both search results and main profile list
+                    profileDirectory.deleteProfile(selectedProfile);
+                    profileDirectory.getSearchResults().remove(selectedProfile);  // Also remove from search results if applicable
+
+                    refreshPersonProfileList();  // Refresh the list after deletion
+                    JOptionPane.showMessageDialog(null, "Account deleted successfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Select an account to delete", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Select an account to delete", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 
@@ -183,26 +195,26 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
      private void populateTable() {
-DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-    model.setRowCount(0);  // Clear the table
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0); 
 
-    ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
+        ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
 
-    for (PersonProfile profile : profilesToShow) {
-        Object[] row = new Object[6];
-        row[0] = profile.getFirstName();
-        row[1] = profile.getLastName();
-        row[2] = profile.getHomeCity();
-        row[3] = profile.getHomeZipCode();
-        row[4] = profile.getWorkCity();
-        row[5] = profile.getWorkZipCode();
-        model.addRow(row);  
-    }
+        for (PersonProfile profile : profilesToShow) {
+            Object[] row = new Object[6];
+            row[0] = profile.getFirstName();
+            row[1] = profile.getLastName();
+            row[2] = profile.getHomeCity();
+            row[3] = profile.getHomeZipCode();
+            row[4] = profile.getWorkCity();
+            row[5] = profile.getWorkZipCode();
+            model.addRow(row);  
+        }
        
     }
     public void refreshPersonProfileList() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0);  // Clear the existing table rows
-        populateTable();  // Repopulate the table with the updated data
+        model.setRowCount(0);  
+        populateTable(); 
     }
 }
