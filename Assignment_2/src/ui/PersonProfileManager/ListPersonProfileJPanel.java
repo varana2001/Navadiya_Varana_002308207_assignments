@@ -196,7 +196,7 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
      private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0); 
+        model.setRowCount(0);  // Clear the table
 
         ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
 
@@ -204,11 +204,13 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
             Object[] row = new Object[6];
             row[0] = profile.getFirstName();
             row[1] = profile.getLastName();
-            row[2] = profile.getHomeCity();
-            row[3] = profile.getHomeZipCode();
-            row[4] = profile.getWorkCity();
-            row[5] = profile.getWorkZipCode();
-            model.addRow(row);  
+
+            row[2] = profile.getHomeAddress().getCity(); 
+            row[3] = profile.getHomeAddress().getZipCode(); 
+            row[4] = profile.getWorkAddress().getCity();
+            row[5] = profile.getWorkAddress().getZipCode();  
+
+            model.addRow(row); 
         }
        
     }
