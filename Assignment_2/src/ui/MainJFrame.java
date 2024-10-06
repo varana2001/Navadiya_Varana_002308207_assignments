@@ -9,6 +9,7 @@ import model.PersonProfileDirectory;
 import ui.PersonProfileManager.AddPersonProfileJPanel;
 import ui.PersonProfileManager.ListPersonProfileJPanel;
 import javax.swing.JOptionPane;
+import model.Address;
 import model.PersonProfile;
 
 /**
@@ -275,18 +276,26 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile1.setSsn(123456789);
         newProfile1.setAge(23);
         newProfile1.setGender('F');
-        newProfile1.setHomeStreetAddress("110 Warren St");
-        newProfile1.setHomeUnitNumber("Apt 2");
-        newProfile1.setHomeCity("Boston");
-        newProfile1.setHomeState("MA");
-        newProfile1.setHomeZipCode(02135);
-        newProfile1.setHomePhoneNumber("1234567890");
-        newProfile1.setWorkStreetAddress("50 Islan View");
-        newProfile1.setWorkUnitNumber("Apt 601");
-        newProfile1.setWorkCity("Boston");
-        newProfile1.setWorkState("MA");
-        newProfile1.setWorkZipCode(02125);
-        newProfile1.setWorkPhoneNumber("0000000000");
+
+         
+        Address homeAddress1 = new Address();
+        homeAddress1.setStreetAddress("110 Warren St");
+        homeAddress1.setUnitNumber("Apt 2");
+        homeAddress1.setCity("Boston");
+        homeAddress1.setState("MA");
+        homeAddress1.setZipCode("02135");
+        homeAddress1.setPhoneNumber("1234567890");
+        newProfile1.setHomeAddress(homeAddress1);  // Set home address
+
+        Address workAddress1 = new Address();
+        workAddress1.setStreetAddress("50 Island View");
+        workAddress1.setUnitNumber("Apt 601");
+        workAddress1.setCity("Boston");
+        workAddress1.setState("MA");
+        workAddress1.setZipCode("02125");
+        workAddress1.setPhoneNumber("0000000000");
+        newProfile1.setWorkAddress(workAddress1);  // Set work address
+
         profileDirectory.addProfile(newProfile1);
 
         PersonProfile newProfile2 = new PersonProfile();
@@ -295,38 +304,53 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile2.setSsn(987654321);
         newProfile2.setAge(28);
         newProfile2.setGender('F');
-        newProfile2.setHomeStreetAddress("15 Cambridge St");
-        newProfile2.setHomeUnitNumber("Apt 9");
-        newProfile2.setHomeCity("Boston");
-        newProfile2.setHomeState("MA");
-        newProfile2.setHomeZipCode(02134);
-        newProfile2.setHomePhoneNumber("0987654321");
-        newProfile2.setWorkStreetAddress("200 Harvard Ave");
-        newProfile2.setWorkUnitNumber("Suite 300");
-        newProfile2.setWorkCity("Cambridge");
-        newProfile2.setWorkState("MA");
-        newProfile2.setWorkZipCode(02125);
-        newProfile2.setWorkPhoneNumber("9876543210");
-        profileDirectory.addProfile(newProfile2);
         
+        Address homeAddress2 = new Address();
+        homeAddress2.setStreetAddress("15 Cambridge St");
+        homeAddress2.setUnitNumber("Apt 9");
+        homeAddress2.setCity("Boston");
+        homeAddress2.setState("MA");
+        homeAddress2.setZipCode("02134");
+        homeAddress2.setPhoneNumber("0987654321");
+        newProfile2.setHomeAddress(homeAddress2);  // Set home address
+
+        Address workAddress2 = new Address();
+        workAddress2.setStreetAddress("200 Harvard Ave");
+        workAddress2.setUnitNumber("Suite 300");
+        workAddress2.setCity("Cambridge");
+        workAddress2.setState("MA");
+        workAddress2.setZipCode("02125");
+        workAddress2.setPhoneNumber("9876543210");
+        newProfile2.setWorkAddress(workAddress2);  // Set work address
+
+        profileDirectory.addProfile(newProfile2);
+
+        // Similar changes for other profiles
         PersonProfile newProfile3 = new PersonProfile();
         newProfile3.setFirstName("Raj");
         newProfile3.setLastName("Desai");
         newProfile3.setSsn(123987456);
         newProfile3.setAge(32);
         newProfile3.setGender('M');
-        newProfile3.setHomeStreetAddress("234 Beacon St");
-        newProfile3.setHomeUnitNumber("Apt 4B");
-        newProfile3.setHomeCity("Newton");
-        newProfile3.setHomeState("MA");
-        newProfile3.setHomeZipCode(02115);
-        newProfile3.setHomePhoneNumber("1239876543");
-        newProfile3.setWorkStreetAddress("500 Main St");
-        newProfile3.setWorkUnitNumber("Office 501");
-        newProfile3.setWorkCity("Boston");
-        newProfile3.setWorkState("MA");
-        newProfile3.setWorkZipCode(02110);
-        newProfile3.setWorkPhoneNumber("1230004567");
+
+        Address homeAddress3 = new Address();
+        homeAddress3.setStreetAddress("234 Beacon St");
+        homeAddress3.setUnitNumber("Apt 4B");
+        homeAddress3.setCity("Newton");
+        homeAddress3.setState("MA");
+        homeAddress3.setZipCode("02115");
+        homeAddress3.setPhoneNumber("1239876543");
+        newProfile3.setHomeAddress(homeAddress3);  // Set home address
+
+        Address workAddress3 = new Address();
+        workAddress3.setStreetAddress("500 Main St");
+        workAddress3.setUnitNumber("Office 501");
+        workAddress3.setCity("Boston");
+        workAddress3.setState("MA");
+        workAddress3.setZipCode("02110");
+        workAddress3.setPhoneNumber("1230004567");
+        newProfile3.setWorkAddress(workAddress3);  // Set work address
+
         profileDirectory.addProfile(newProfile3);
         
         PersonProfile newProfile4 = new PersonProfile();
@@ -335,38 +359,52 @@ public class MainJFrame extends javax.swing.JFrame {
         newProfile4.setSsn(567890123);
         newProfile4.setAge(26);
         newProfile4.setGender('F');
-        newProfile4.setHomeStreetAddress("567 Commonwealth Ave");
-        newProfile4.setHomeUnitNumber("Apt 7A");
-        newProfile4.setHomeCity("Brookline");
-        newProfile4.setHomeState("MA");
-        newProfile4.setHomeZipCode(02446);
-        newProfile4.setHomePhoneNumber("5678901234");
-        newProfile4.setWorkStreetAddress("150 Boylston St");
-        newProfile4.setWorkUnitNumber("Suite 700");
-        newProfile4.setWorkCity("Boston");
-        newProfile4.setWorkState("MA");
-        newProfile4.setWorkZipCode(02116);
-        newProfile4.setWorkPhoneNumber("5678904321");
+
+        Address homeAddress4 = new Address();
+        homeAddress4.setStreetAddress("567 Commonwealth Ave");
+        homeAddress4.setUnitNumber("Apt 7A");
+        homeAddress4.setCity("Brookline");
+        homeAddress4.setState("MA");
+        homeAddress4.setZipCode("02446");
+        homeAddress4.setPhoneNumber("5678901234");
+        newProfile4.setHomeAddress(homeAddress4);  // Set home address
+
+        Address workAddress4 = new Address();
+        workAddress4.setStreetAddress("150 Boylston St");
+        workAddress4.setUnitNumber("Suite 700");
+        workAddress4.setCity("Boston");
+        workAddress4.setState("MA");
+        workAddress4.setZipCode("02116");
+        workAddress4.setPhoneNumber("5678904321");
+        newProfile4.setWorkAddress(workAddress4);  // Set work address
+
         profileDirectory.addProfile(newProfile4);
-        
+
         PersonProfile newProfile5 = new PersonProfile();
         newProfile5.setFirstName("Kunal");
         newProfile5.setLastName("Joshi");
         newProfile5.setSsn(112233445);
         newProfile5.setAge(29);
         newProfile5.setGender('M');
-        newProfile5.setHomeStreetAddress("789 Washington St");
-        newProfile5.setHomeUnitNumber("Apt 12");
-        newProfile5.setHomeCity("Somerville");
-        newProfile5.setHomeState("MA");
-        newProfile5.setHomeZipCode(02145);
-        newProfile5.setHomePhoneNumber("1122334455");
-        newProfile5.setWorkStreetAddress("100 State St");
-        newProfile5.setWorkUnitNumber("Floor 5");
-        newProfile5.setWorkCity("Boston");
-        newProfile5.setWorkState("MA");
-        newProfile5.setWorkZipCode(02116);
-        newProfile5.setWorkPhoneNumber("1122330099");
+
+        Address homeAddress5 = new Address();
+        homeAddress5.setStreetAddress("789 Washington St");
+        homeAddress5.setUnitNumber("Apt 12");
+        homeAddress5.setCity("Somerville");
+        homeAddress5.setState("MA");
+        homeAddress5.setZipCode("02145");
+        homeAddress5.setPhoneNumber("1122334455");
+        newProfile5.setHomeAddress(homeAddress5);  // Set home address
+
+        Address workAddress5 = new Address();
+        workAddress5.setStreetAddress("100 State St");
+        workAddress5.setUnitNumber("Floor 5");
+        workAddress5.setCity("Boston");
+        workAddress5.setState("MA");
+        workAddress5.setZipCode("02116");
+        workAddress5.setPhoneNumber("1122330099");
+        newProfile5.setWorkAddress(workAddress5);  // Set work address
+
         profileDirectory.addProfile(newProfile5);
         
     }
