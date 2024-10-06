@@ -58,12 +58,19 @@ public class PersonProfileDirectory {
         for (PersonProfile p : profile) {
             boolean firstNameMatch = p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerSearchInput);
             boolean lastNameMatch = p.getLastName() != null && p.getLastName().toLowerCase().contains(lowerSearchInput);
-            boolean homeStreetMatch = p.getHomeStreetAddress() != null && p.getHomeStreetAddress().toLowerCase().contains(lowerSearchInput);
-            boolean workStreetMatch = p.getWorkStreetAddress() != null && p.getWorkStreetAddress().toLowerCase().contains(lowerSearchInput);
+
+
+            boolean homeStreetMatch = p.getHomeAddress() != null &&
+                                      p.getHomeAddress().getStreetAddress() != null &&
+                                      p.getHomeAddress().getStreetAddress().toLowerCase().contains(lowerSearchInput);
+
+            boolean workStreetMatch = p.getWorkAddress() != null &&
+                                      p.getWorkAddress().getStreetAddress() != null &&
+                                      p.getWorkAddress().getStreetAddress().toLowerCase().contains(lowerSearchInput);
 
             if (firstNameMatch || lastNameMatch || homeStreetMatch || workStreetMatch) {
-                searchResults.add(p);  // Add matching profile to search results
+                searchResults.add(p);  
+                }
             }
-        }
     }
 }
