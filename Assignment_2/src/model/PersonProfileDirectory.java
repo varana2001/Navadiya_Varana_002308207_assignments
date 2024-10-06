@@ -52,8 +52,8 @@ public class PersonProfileDirectory {
     }
     
     public void searchProfile(String searchInput) {
-        searchResults.clear();  // Clear previous search results
-        String lowerSearchInput = searchInput.toLowerCase();  // Make search input case-insensitive
+        searchResults.clear();  
+        String lowerSearchInput = searchInput.toLowerCase();  
 
         for (PersonProfile p : profile) {
             boolean firstNameMatch = p.getFirstName() != null && p.getFirstName().toLowerCase().contains(lowerSearchInput);

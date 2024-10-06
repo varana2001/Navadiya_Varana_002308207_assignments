@@ -29,12 +29,12 @@ public class MainJFrame extends javax.swing.JFrame {
     public void focusGained(java.awt.event.FocusEvent evt) {
         if (txtSearchPerson.getText().equals("Type name or street address")) {
             txtSearchPerson.setText("");
-            txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); // Set text color to black
+            txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); 
         }
     }
     public void focusLost(java.awt.event.FocusEvent evt) {
         if (txtSearchPerson.getText().trim().isEmpty()) {
-            txtSearchPerson.setForeground(new java.awt.Color(204, 204, 204)); // Set text color back to gray
+            txtSearchPerson.setForeground(new java.awt.Color(204, 204, 204)); 
             txtSearchPerson.setText("Type name or street address");
         }
     }
@@ -176,7 +176,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (txtSearchPerson.getForeground().equals(new java.awt.Color(204, 204, 204))) {
         txtSearchPerson.setText(""); // Clear text
-        txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); // Set text color to black
+        txtSearchPerson.setForeground(new java.awt.Color(0, 0, 0)); 
     }
     }//GEN-LAST:event_txtSearchPersonActionPerformed
 
@@ -285,7 +285,7 @@ public class MainJFrame extends javax.swing.JFrame {
         homeAddress1.setState("MA");
         homeAddress1.setZipCode("02135");
         homeAddress1.setPhoneNumber("1234567890");
-        newProfile1.setHomeAddress(homeAddress1);  // Set home address
+        newProfile1.setHomeAddress(homeAddress1);  
 
         Address workAddress1 = new Address();
         workAddress1.setStreetAddress("50 Island View");
@@ -294,7 +294,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workAddress1.setState("MA");
         workAddress1.setZipCode("02125");
         workAddress1.setPhoneNumber("0000000000");
-        newProfile1.setWorkAddress(workAddress1);  // Set work address
+        newProfile1.setWorkAddress(workAddress1);  
 
         profileDirectory.addProfile(newProfile1);
 
@@ -312,7 +312,7 @@ public class MainJFrame extends javax.swing.JFrame {
         homeAddress2.setState("MA");
         homeAddress2.setZipCode("02134");
         homeAddress2.setPhoneNumber("0987654321");
-        newProfile2.setHomeAddress(homeAddress2);  // Set home address
+        newProfile2.setHomeAddress(homeAddress2);  
 
         Address workAddress2 = new Address();
         workAddress2.setStreetAddress("200 Harvard Ave");
@@ -321,7 +321,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workAddress2.setState("MA");
         workAddress2.setZipCode("02125");
         workAddress2.setPhoneNumber("9876543210");
-        newProfile2.setWorkAddress(workAddress2);  // Set work address
+        newProfile2.setWorkAddress(workAddress2);  
 
         profileDirectory.addProfile(newProfile2);
 
@@ -340,7 +340,7 @@ public class MainJFrame extends javax.swing.JFrame {
         homeAddress3.setState("MA");
         homeAddress3.setZipCode("02115");
         homeAddress3.setPhoneNumber("1239876543");
-        newProfile3.setHomeAddress(homeAddress3);  // Set home address
+        newProfile3.setHomeAddress(homeAddress3);  
 
         Address workAddress3 = new Address();
         workAddress3.setStreetAddress("500 Main St");
@@ -349,7 +349,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workAddress3.setState("MA");
         workAddress3.setZipCode("02110");
         workAddress3.setPhoneNumber("1230004567");
-        newProfile3.setWorkAddress(workAddress3);  // Set work address
+        newProfile3.setWorkAddress(workAddress3);  
 
         profileDirectory.addProfile(newProfile3);
         
@@ -367,7 +367,7 @@ public class MainJFrame extends javax.swing.JFrame {
         homeAddress4.setState("MA");
         homeAddress4.setZipCode("02446");
         homeAddress4.setPhoneNumber("5678901234");
-        newProfile4.setHomeAddress(homeAddress4);  // Set home address
+        newProfile4.setHomeAddress(homeAddress4);  
 
         Address workAddress4 = new Address();
         workAddress4.setStreetAddress("150 Boylston St");
@@ -376,7 +376,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workAddress4.setState("MA");
         workAddress4.setZipCode("02116");
         workAddress4.setPhoneNumber("5678904321");
-        newProfile4.setWorkAddress(workAddress4);  // Set work address
+        newProfile4.setWorkAddress(workAddress4);  
 
         profileDirectory.addProfile(newProfile4);
 
@@ -394,7 +394,7 @@ public class MainJFrame extends javax.swing.JFrame {
         homeAddress5.setState("MA");
         homeAddress5.setZipCode("02145");
         homeAddress5.setPhoneNumber("1122334455");
-        newProfile5.setHomeAddress(homeAddress5);  // Set home address
+        newProfile5.setHomeAddress(homeAddress5);  
 
         Address workAddress5 = new Address();
         workAddress5.setStreetAddress("100 State St");
@@ -403,7 +403,7 @@ public class MainJFrame extends javax.swing.JFrame {
         workAddress5.setState("MA");
         workAddress5.setZipCode("02116");
         workAddress5.setPhoneNumber("1122330099");
-        newProfile5.setWorkAddress(workAddress5);  // Set work address
+        newProfile5.setWorkAddress(workAddress5);  
 
         profileDirectory.addProfile(newProfile5);
         

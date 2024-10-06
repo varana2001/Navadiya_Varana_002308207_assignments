@@ -148,17 +148,17 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     workAreaJPanel.remove(this);
 
-        // Get the previous panel from the stack
+        
         Component[] panelStack = workAreaJPanel.getComponents();
         JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
 
-        // Check if the last panel is an instance of ListPersonProfileJPanel
+        
         if (lastPanel instanceof ListPersonProfileJPanel) {
             ListPersonProfileJPanel listPanel = (ListPersonProfileJPanel) lastPanel;
             listPanel.refreshPersonProfileList();  // Call method to refresh the list
         }
 
-        // Navigate back to the previous panel
+       
         CardLayout layout = (CardLayout) workAreaJPanel.getLayout();
         layout.previous(workAreaJPanel);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -173,7 +173,7 @@ public class ListPersonProfileJPanel extends javax.swing.JPanel {
                     ArrayList<PersonProfile> profilesToShow = showSearchResults ? profileDirectory.getSearchResults() : profileDirectory.getProfile();
                     PersonProfile selectedProfile = profilesToShow.get(selectedRow);
 
-                    // Remove from both search results and main profile list
+                    
                     profileDirectory.deleteProfile(selectedProfile);
                     profileDirectory.getSearchResults().remove(selectedProfile);  // Also remove from search results if applicable
 

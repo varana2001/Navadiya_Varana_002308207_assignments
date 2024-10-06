@@ -41,28 +41,28 @@ public class ViewPersonProfileJPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     
-    private void setViewMode() {
-        
-        txtFName.setEnabled(false);
-        txtLName.setEnabled(false);
-        txtAge.setEnabled(false);
-        txtSSN.setEnabled(false);
-        txtHCity.setEnabled(false);
-        txtHPhoneNumber.setEnabled(false);
-        txtHAddress.setEnabled(false);
-        txtHState.setEnabled(false);
-        txtHUnit.setEnabled(false);
-        txtHZip.setEnabled(false);
-        txtWCity.setEnabled(false);
-        txtWPhoneNumber.setEnabled(false);
-        txtWState.setEnabled(false);
-        txtWAddress.setEnabled(false);
-        txtWUnit.setEnabled(false);
-        txtWZip.setEnabled(false);
-        txtGender.setEnabled(false);
-        btnSave.setEnabled(false);
-        btnUpdate.setEnabled(true);
-    }
+        private void setViewMode() {
+
+            txtFName.setEnabled(false);
+            txtLName.setEnabled(false);
+            txtAge.setEnabled(false);
+            txtSSN.setEnabled(false);
+            txtHCity.setEnabled(false);
+            txtHPhoneNumber.setEnabled(false);
+            txtHAddress.setEnabled(false);
+            txtHState.setEnabled(false);
+            txtHUnit.setEnabled(false);
+            txtHZip.setEnabled(false);
+            txtWCity.setEnabled(false);
+            txtWPhoneNumber.setEnabled(false);
+            txtWState.setEnabled(false);
+            txtWAddress.setEnabled(false);
+            txtWUnit.setEnabled(false);
+            txtWZip.setEnabled(false);
+            txtGender.setEnabled(false);
+            btnSave.setEnabled(false);
+            btnUpdate.setEnabled(true);
+        }
     
         private void setEditMode() {
             txtFName.setEnabled(true);
@@ -426,7 +426,7 @@ public class ViewPersonProfileJPanel extends javax.swing.JPanel {
             return;
         }
 
-        // Parsing and validation for numeric fields
+       
         long ssNumber;
         int Age;
         char gender;
@@ -483,8 +483,6 @@ public class ViewPersonProfileJPanel extends javax.swing.JPanel {
         }
 
         
-
-    
         profile.setFirstName(fName);
         profile.setLastName(lName);
         profile.setSsn(ssNumber);
