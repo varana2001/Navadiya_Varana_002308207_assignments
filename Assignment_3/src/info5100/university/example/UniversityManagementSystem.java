@@ -45,7 +45,7 @@ public class UniversityManagementSystem {
         courseCatalog.newCourse("Data Engineering", "INFO6405", 4, false);
         courseCatalog.newCourse("Network Security", "INFO6505", 4, false);
         courseCatalog.newCourse("Deep Learning & AI", "INFO6605", 4, false);
-
+    }
     public void setupFaculty() {
         String[][] facultyData = {
         {"F101", "Linda", "Evans"},
@@ -77,5 +77,10 @@ public class UniversityManagementSystem {
         {"S109", "Emily", "Hernandez"},
         {"S110", "Jacob", "Zhou"}
             };
+        for (String[] data : studentData) {
+            // Use the new newPerson method with all parameters
+            Person studentPerson = department.getPersonDirectory().newPerson(data[0], data[1], data[2]);
+            studentDirectory.newStudentProfile(studentPerson);
+        }
     }
 }
