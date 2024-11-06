@@ -5,36 +5,47 @@
  */
 package info5100.university.example.CourseCatalog;
 
-/**
- *
- * @author kal bugrara
- */
 public class Course {
-
     String number;
     String name;
     int credits;
-    int price = 1500; //per credit hour
+    int price = 1500; // price per credit hour
+    boolean isCore;
 
-    public Course(String n, String numb, int ch) {
+    public Course(String n, String numb, int ch, boolean isCore) {
         name = n;
         number = numb;
         credits = ch;
-
+        this.isCore = isCore;
     }
 
-    public String getCOurseNumber() {
+    public String getCourseNumber() {
         return number;
-    }
-
-    public int getCoursePrice() {
-        return price * credits;
-
     }
 
     public int getCredits() {
         return credits;
+    }
     
-}
+    public String getName() {
+        return name;
+    }
+
+    public int getCoursePrice() {
+        return price * credits;
+    }
     
+    public boolean isCore() {
+        return isCore;
+    }
+        
+    public int getPricePerCredit() {
+        return price;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s - %s (%d credits, %s)",
+            number, name, credits, isCore ? "Core" : "Elective");
+    }
 }
