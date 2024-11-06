@@ -34,18 +34,35 @@ public class UniversityManagementSystem {
     public void setupCourseCatalog() {
         // Core course
         courseCatalog.newCourse("Applied Engineering and Development", "INFO5100", 4, true);
+        System.out.println("Added Core Course: Applied Engineering and Development (INFO5100)");
 
         // Elective courses
         courseCatalog.newCourse("Cloud Computing", "INFO6300", 4, false);
-        courseCatalog.newCourse("Data Science Engineering", "INFO6400", 4, false);
-        courseCatalog.newCourse("Cyber Security", "INFO6500", 4, false);
-        courseCatalog.newCourse("AI & Machine Learning", "INFO6600", 4, false);
-        courseCatalog.newCourse("Web Design & User Experience", "INFO6150", 4, false);
-        courseCatalog.newCourse("Program Structure & Algorithms", "INFO6205", 4, false);
-        courseCatalog.newCourse("Database Management Systems", "INFO6210", 4, false);
-        courseCatalog.newCourse("Web Development Tools & Methods", "INFO6250", 4, false);
-        courseCatalog.newCourse("Smartphone-based Web Development", "INFO6350", 4, false);
+        System.out.println("Added Elective Course: Cloud Computing (INFO6300)");
 
+        courseCatalog.newCourse("Data Science Engineering", "INFO6400", 4, false);
+        System.out.println("Added Elective Course: Data Science Engineering (INFO6400)");
+
+        courseCatalog.newCourse("Cyber Security", "INFO6500", 4, false);
+        System.out.println("Added Elective Course: Cyber Security (INFO6500)");
+
+        courseCatalog.newCourse("AI & Machine Learning", "INFO6600", 4, false);
+        System.out.println("Added Elective Course: AI & Machine Learning (INFO6600)");
+
+        courseCatalog.newCourse("Web Design & User Experience", "INFO6150", 4, false);
+        System.out.println("Added Elective Course: Web Design & User Experience (INFO6150)");
+
+        courseCatalog.newCourse("Program Structure & Algorithms", "INFO6205", 4, false);
+        System.out.println("Added Elective Course: Program Structure & Algorithms (INFO6205)");
+
+        courseCatalog.newCourse("Database Management Systems", "INFO6210", 4, false);
+        System.out.println("Added Elective Course: Database Management Systems (INFO6210)");
+
+        courseCatalog.newCourse("Web Development Tools & Methods", "INFO6250", 4, false);
+        System.out.println("Added Elective Course: Web Development Tools & Methods (INFO6250)");
+
+        courseCatalog.newCourse("Smartphone-based Web Development", "INFO6350", 4, false);
+        System.out.println("Added Elective Course: Smartphone-based Web Development (INFO6350)");
     }
 
     public void setupFaculty() {
@@ -60,9 +77,9 @@ public class UniversityManagementSystem {
         };
 
         for (String[] data : facultyData) {
-            // Use the new newPerson method with all parameters
             Person facultyPerson = department.getPersonDirectory().newPerson(data[0], data[1], data[2]);
             facultyDirectory.newFacultyProfile(facultyPerson);
+            System.out.printf("Added Faculty: %s %s (ID: %s)\n", data[1], data[2], data[0]);
         }
     }
 
@@ -81,17 +98,16 @@ public class UniversityManagementSystem {
         };
 
         for (String[] data : studentData) {
-            // Use the new newPerson method with all parameters
             Person studentPerson = department.getPersonDirectory().newPerson(data[0], data[1], data[2]);
             studentDirectory.newStudentProfile(studentPerson);
+            System.out.printf("Added Student: %s %s (ID: %s)\n", data[1], data[2], data[0]);
         }
     }
-      
+
     public void setupCourseSchedule() {
-        // Create multiple sections for some courses to reach 10 scheduled classes
         String[] courseSchedules = {
-            "INFO5100-SEC1", // Core course section 1
-            "INFO5100-SEC2", // Core course section 2 (multiple sections for core course)
+            "INFO5100-SEC1",
+            "INFO5100-SEC2",
             "INFO6150-SEC1",
             "INFO6205-SEC1",
             "INFO6210-SEC1",
@@ -102,28 +118,28 @@ public class UniversityManagementSystem {
             "INFO6500-SEC1"
         };
 
-        // Track assigned courses per faculty to ensure balanced distribution
         Map<FacultyProfile, Integer> facultyLoadCount = new HashMap<>();
         FacultyProfile[] faculty = facultyDirectory.getFacultyList().toArray(new FacultyProfile[0]);
         for (FacultyProfile fp : faculty) {
             facultyLoadCount.put(fp, 0);
         }
 
-        // Create course offerings with sections
         for (String scheduleItem : courseSchedules) {
-            String[] parts = scheduleItem.split("-"); // Split into courseNumber and section
+            String[] parts = scheduleItem.split("-");
             String courseNumber = parts[0];
 
             CourseOffer offer = courseSchedule.newCourseOffer(courseNumber);
             if (offer != null) {
-                offer.generatSeats(30); // Each section can accommodate 30 students
+                offer.generatSeats(30);
+                System.out.printf("Created Course Offer: %s - Section: %s\n", courseNumber, parts[1]);
 
-                // Assign faculty with the least number of courses
                 FacultyProfile selectedFaculty = getLeastLoadedFaculty(facultyLoadCount);
                 offer.AssignAsTeacher(selectedFaculty);
                 facultyLoadCount.put(selectedFaculty, facultyLoadCount.get(selectedFaculty) + 1);
 
-                // Store section information
+                System.out.printf("Assigned Professor: %s to Course: %s - Section: %s\n",
+                        selectedFaculty.getPerson().getFullName(), courseNumber, parts[1]);
+
                 offer.setSection(parts[1]);
             }
         }
@@ -144,28 +160,28 @@ public class UniversityManagementSystem {
         for (StudentProfile student : studentDirectory.getStudentlist()) {
             CourseLoad courseLoad = student.newCourseLoad("Fall 2024");
 
-            // Each student must take:
-            // 1. One section of the core course (INFO5100)
-            // 2. At least one elective course
-            // Register for core course
             CourseOffer coreSection = getAvailableCoreSection();
             if (coreSection != null) {
                 courseLoad.registerStudentInClass(coreSection);
+                System.out.printf("Registered Student: %s (ID: %s) in Core Course: %s - %s\n",
+                        student.getPerson().getFullName(), student.getPerson().getPersonId(),
+                        coreSection.getCourse().getCourseNumber(), coreSection.getSection());
                 totalRegistrations++;
             }
 
-            // Register for 1-2 elective courses
-            int numElectives = 1 + (int) (Math.random() * 2); // 1 or 2 electives
+            int numElectives = 1 + (int) (Math.random() * 2);
             for (int i = 0; i < numElectives; i++) {
                 CourseOffer electiveOffer = getRandomElectiveOffer(offers);
                 if (electiveOffer != null) {
                     courseLoad.registerStudentInClass(electiveOffer);
+                    System.out.printf("Registered Student: %s (ID: %s) in Elective Course: %s - %s\n",
+                            student.getPerson().getFullName(), student.getPerson().getPersonId(),
+                            electiveOffer.getCourse().getCourseNumber(), electiveOffer.getSection());
                     totalRegistrations++;
                 }
             }
         }
 
-        // Verify minimum registration requirement
         System.out.println("\nRegistration Statistics:");
         System.out.println("Total course registrations: " + totalRegistrations);
         if (totalRegistrations < 20) {
@@ -195,38 +211,36 @@ public class UniversityManagementSystem {
         return availableElectives.get(randomIndex);
     }
 
-    public void generateSemesterReport() {        
-        System.out.println("\n====================== SEMESTER REPORT - Fall 2024 ======================\n");
-        
-        // Print Schedule Summary
+    public void generateSemesterReport() {
+        System.out.println("\n-------------------------- SEMESTER REPORT - Fall 2024-------------------------- \n");
+
         System.out.println("COURSE SCHEDULE SUMMARY:");
         System.out.println("------------------------");
         Map<FacultyProfile, List<CourseOffer>> facultyTeachingLoad = new HashMap<>();
-        
+
         for (CourseOffer offer : courseSchedule.getCourseOffers()) {
             FacultyProfile faculty = offer.getFacultyProfile();
             facultyTeachingLoad.computeIfAbsent(faculty, k -> new ArrayList<>()).add(offer);
         }
-        
+
         System.out.println("\nFACULTY TEACHING ASSIGNMENTS:");
         for (Map.Entry<FacultyProfile, List<CourseOffer>> entry : facultyTeachingLoad.entrySet()) {
             FacultyProfile faculty = entry.getKey();
             List<CourseOffer> courses = entry.getValue();
-            
+
             System.out.printf("\nProfessor: %s\n", faculty.getPerson().getFullName());
             System.out.println("Teaching:");
             for (CourseOffer offer : courses) {
                 Course course = offer.getCourse();
                 System.out.printf("  - %s %s: %s (%s)\n",
-                    course.getCourseNumber(),
-                    offer.getSection(),
-                    course.getName(),
-                    course.isCore() ? "Core" : "Elective");
+                        course.getCourseNumber(),
+                        offer.getSection(),
+                        course.getName(),
+                        course.isCore() ? "Core" : "Elective");
             }
         }
 
-        // First print course catalog information
-        System.out.println("COURSE CATALOG:");
+        System.out.println("\n\nCOURSE CATALOG:");
         System.out.println("-------------");
         for (CourseOffer offer : courseSchedule.getCourseOffers()) {
             Course course = offer.getCourse();
@@ -320,10 +334,9 @@ public class UniversityManagementSystem {
                             totalTuition);
                 }
             }
-            System.out.println("================================================================");
+            System.out.println("------------------------------------------------");
         }
 
-        // Print final statistics
         System.out.printf("\nFINAL STATISTICS:\n"
                 + "Total Course Registrations: %d\n"
                 + "Department Revenue: $%,d\n",
@@ -334,14 +347,12 @@ public class UniversityManagementSystem {
     public static void main(String[] args) {
         UniversityManagementSystem ums = new UniversityManagementSystem("Information Systems");
 
-        // Setup the university system
         ums.setupCourseCatalog();
         ums.setupFaculty();
         ums.setupStudents();
         ums.setupCourseSchedule();
         ums.registerStudents();
 
-        // Generate the semester report
         ums.generateSemesterReport();
     }
 }
