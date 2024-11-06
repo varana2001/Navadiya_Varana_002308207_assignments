@@ -33,28 +33,30 @@ public class UniversityManagementSystem {
 
     public void setupCourseCatalog() {
         // Core course
-        courseCatalog.newCourse("Advanced Software Development", "INFO5105", 4, true);
+        courseCatalog.newCourse("Applied Engineering and Development", "INFO5100", 4, true);
 
         // Elective courses
-        courseCatalog.newCourse("Human-Computer Interaction", "INFO6155", 4, false);
-        courseCatalog.newCourse("Algorithm Design & Optimization", "INFO6206", 4, false);
-        courseCatalog.newCourse("Data Storage & Retrieval", "INFO6215", 4, false);
-        courseCatalog.newCourse("Web Application Frameworks", "INFO6255", 4, false);
-        courseCatalog.newCourse("Mobile App Development", "INFO6355", 4, false);
-        courseCatalog.newCourse("Distributed Systems", "INFO6305", 4, false);
-        courseCatalog.newCourse("Data Engineering", "INFO6405", 4, false);
-        courseCatalog.newCourse("Network Security", "INFO6505", 4, false);
-        courseCatalog.newCourse("Deep Learning & AI", "INFO6605", 4, false);
+        courseCatalog.newCourse("Cloud Computing", "INFO6300", 4, false);
+        courseCatalog.newCourse("Data Science Engineering", "INFO6400", 4, false);
+        courseCatalog.newCourse("Cyber Security", "INFO6500", 4, false);
+        courseCatalog.newCourse("AI & Machine Learning", "INFO6600", 4, false);
+        courseCatalog.newCourse("Web Design & User Experience", "INFO6150", 4, false);
+        courseCatalog.newCourse("Program Structure & Algorithms", "INFO6205", 4, false);
+        courseCatalog.newCourse("Database Management Systems", "INFO6210", 4, false);
+        courseCatalog.newCourse("Web Development Tools & Methods", "INFO6250", 4, false);
+        courseCatalog.newCourse("Smartphone-based Web Development", "INFO6350", 4, false);
+
     }
+
     public void setupFaculty() {
         String[][] facultyData = {
-        {"F101", "Linda", "Evans"},
-        {"F102", "David", "Harris"},
-        {"F103", "Susan", "Clark"},
-        {"F104", "Karen", "Lewis"},
-        {"F105", "Matthew", "Walker"},
-        {"F106", "Jessica", "Robinson"},
-        {"F107", "Daniel", "Hall"}
+            {"F001", "Jane", "Smith"},
+            {"F002", "Mark", "Johnson"},
+            {"F003", "Robert", "Williams"},
+            {"F004", "Patricia", "Brown"},
+            {"F005", "George", "Davis"},
+            {"F006", "Elena", "Miller"},
+            {"F007", "John", "Wilson"}
         };
 
         for (String[] data : facultyData) {
@@ -66,25 +68,26 @@ public class UniversityManagementSystem {
 
     public void setupStudents() {
         String[][] studentData = {
-        {"S101", "Lily", "Ramirez"},
-        {"S102", "Jack", "Nguyen"},
-        {"S103", "Zoe", "Thomas"},
-        {"S104", "Ethan", "Lopez"},
-        {"S105", "Chloe", "Clark"},
-        {"S106", "Benjamin", "Jain"},
-        {"S107", "Ella", "Sharma"},
-        {"S108", "Henry", "Ali"},
-        {"S109", "Emily", "Hernandez"},
-        {"S110", "Jacob", "Zhou"}
-            };
+            {"S001", "Tom", "Garcia"},
+            {"S002", "Amar", "Martinez"},
+            {"S003", "Arick", "Rodriguez"},
+            {"S004", "Jack", "Lee"},
+            {"S005", "Ava", "Wang"},
+            {"S006", "William", "Kumar"},
+            {"S007", "Sophia", "Chen"},
+            {"S008", "Mason", "Singh"},
+            {"S009", "Elena", "Patel"},
+            {"S010", "Lucas", "Kim"}
+        };
+
         for (String[] data : studentData) {
             // Use the new newPerson method with all parameters
             Person studentPerson = department.getPersonDirectory().newPerson(data[0], data[1], data[2]);
             studentDirectory.newStudentProfile(studentPerson);
         }
     }
-    
-        public void setupCourseSchedule() {
+      
+    public void setupCourseSchedule() {
         // Create multiple sections for some courses to reach 10 scheduled classes
         String[] courseSchedules = {
             "INFO5100-SEC1", // Core course section 1
@@ -190,5 +193,155 @@ public class UniversityManagementSystem {
 
         int randomIndex = (int) (Math.random() * availableElectives.size());
         return availableElectives.get(randomIndex);
+    }
+
+    public void generateSemesterReport() {        
+        System.out.println("\n====================== SEMESTER REPORT - Fall 2024 ======================\n");
+        
+        // Print Schedule Summary
+        System.out.println("COURSE SCHEDULE SUMMARY:");
+        System.out.println("------------------------");
+        Map<FacultyProfile, List<CourseOffer>> facultyTeachingLoad = new HashMap<>();
+        
+        for (CourseOffer offer : courseSchedule.getCourseOffers()) {
+            FacultyProfile faculty = offer.getFacultyProfile();
+            facultyTeachingLoad.computeIfAbsent(faculty, k -> new ArrayList<>()).add(offer);
+        }
+        
+        System.out.println("\nFACULTY TEACHING ASSIGNMENTS:");
+        for (Map.Entry<FacultyProfile, List<CourseOffer>> entry : facultyTeachingLoad.entrySet()) {
+            FacultyProfile faculty = entry.getKey();
+            List<CourseOffer> courses = entry.getValue();
+            
+            System.out.printf("\nProfessor: %s\n", faculty.getPerson().getFullName());
+            System.out.println("Teaching:");
+            for (CourseOffer offer : courses) {
+                Course course = offer.getCourse();
+                System.out.printf("  - %s %s: %s (%s)\n",
+                    course.getCourseNumber(),
+                    offer.getSection(),
+                    course.getName(),
+                    course.isCore() ? "Core" : "Elective");
+            }
+        }
+
+        // First print course catalog information
+        System.out.println("COURSE CATALOG:");
+        System.out.println("-------------");
+        for (CourseOffer offer : courseSchedule.getCourseOffers()) {
+            Course course = offer.getCourse();
+            System.out.printf("%s - %s (%s)\n"
+                    + "Credits: %d\n"
+                    + "Cost per Credit: $%,d\n"
+                    + "Total Course Cost: $%,d\n"
+                    + "Type: %s\n"
+                    + "Instructor: %s\n\n",
+                    course.getCourseNumber(),
+                    course.getName(),
+                    course.getCredits() + " credits",
+                    course.getCredits(),
+                    course.getPricePerCredit(),
+                    course.getCoursePrice(),
+                    course.isCore() ? "Core Course" : "Elective Course",
+                    offer.getFacultyProfile().getPerson().getFullName());
+        }
+
+        System.out.println("\nSTUDENT REGISTRATIONS AND GRADES:");
+        System.out.println("--------------------------------");
+
+        int totalRegistrations = 0;
+
+        for (StudentProfile student : studentDirectory.getStudentlist()) {
+            Person studentPerson = student.getPerson();
+            System.out.printf("\nStudent: %s (ID: %s)\n",
+                    studentPerson.getFullName(),
+                    studentPerson.getPersonId());
+
+            CourseLoad courseLoad = student.getCurrentCourseLoad();
+            if (courseLoad != null) {
+                System.out.println("Courses Registered:");
+                double totalGradePoints = 0;
+                int totalCredits = 0;
+                int totalTuition = 0;
+
+                for (SeatAssignment seat : courseLoad.getSeatassignments()) {
+                    totalRegistrations++;
+
+                    CourseOffer offer = seat.getSeat().getCourseoffer();
+                    Course course = offer.getCourse();
+                    Person professor = offer.getFacultyProfile().getPerson();
+
+                    double grade = 2.0 + (Math.random() * 2.0);
+                    seat.assignGrade(grade);
+
+                    String letterGrade;
+                    if (grade >= 3.7) {
+                        letterGrade = "A";
+                    } else if (grade >= 3.3) {
+                        letterGrade = "A-";
+                    } else if (grade >= 3.0) {
+                        letterGrade = "B+";
+                    } else if (grade >= 2.7) {
+                        letterGrade = "B";
+                    } else if (grade >= 2.3) {
+                        letterGrade = "B-";
+                    } else {
+                        letterGrade = "C+";
+                    }
+
+                    System.out.printf("  - %s - %s (%s)\n"
+                            + "    Professor: %s\n"
+                            + "    Course Type: %s\n"
+                            + "    Credits: %d (Cost: $%,d)\n"
+                            + "    Grade: %.2f (%s)\n\n",
+                            course.getCourseNumber(),
+                            course.getName(),
+                            course.getCredits() + " credits",
+                            professor.getFullName(),
+                            course.isCore() ? "Core" : "Elective",
+                            course.getCredits(),
+                            course.getCoursePrice(),
+                            grade,
+                            letterGrade);
+
+                    totalGradePoints += grade * course.getCredits();
+                    totalCredits += course.getCredits();
+                    totalTuition += course.getCoursePrice();
+                }
+
+                if (totalCredits > 0) {
+                    double gpa = totalGradePoints / totalCredits;
+                    System.out.printf("Semester Summary:\n"
+                            + "  Total Credits: %d\n"
+                            + "  Semester GPA: %.2f\n"
+                            + "  Total Tuition: $%,d\n",
+                            totalCredits,
+                            gpa,
+                            totalTuition);
+                }
+            }
+            System.out.println("================================================================");
+        }
+
+        // Print final statistics
+        System.out.printf("\nFINAL STATISTICS:\n"
+                + "Total Course Registrations: %d\n"
+                + "Department Revenue: $%,d\n",
+                totalRegistrations,
+                department.calculateRevenuesBySemester("Fall 2024"));
+    }
+
+    public static void main(String[] args) {
+        UniversityManagementSystem ums = new UniversityManagementSystem("Information Systems");
+
+        // Setup the university system
+        ums.setupCourseCatalog();
+        ums.setupFaculty();
+        ums.setupStudents();
+        ums.setupCourseSchedule();
+        ums.registerStudents();
+
+        // Generate the semester report
+        ums.generateSemesterReport();
     }
 }
