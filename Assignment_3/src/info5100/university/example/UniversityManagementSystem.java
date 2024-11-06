@@ -83,4 +83,112 @@ public class UniversityManagementSystem {
             studentDirectory.newStudentProfile(studentPerson);
         }
     }
+    
+        public void setupCourseSchedule() {
+        // Create multiple sections for some courses to reach 10 scheduled classes
+        String[] courseSchedules = {
+            "INFO5100-SEC1", // Core course section 1
+            "INFO5100-SEC2", // Core course section 2 (multiple sections for core course)
+            "INFO6150-SEC1",
+            "INFO6205-SEC1",
+            "INFO6210-SEC1",
+            "INFO6250-SEC1",
+            "INFO6350-SEC1",
+            "INFO6300-SEC1",
+            "INFO6400-SEC1",
+            "INFO6500-SEC1"
+        };
+
+        // Track assigned courses per faculty to ensure balanced distribution
+        Map<FacultyProfile, Integer> facultyLoadCount = new HashMap<>();
+        FacultyProfile[] faculty = facultyDirectory.getFacultyList().toArray(new FacultyProfile[0]);
+        for (FacultyProfile fp : faculty) {
+            facultyLoadCount.put(fp, 0);
+        }
+
+        // Create course offerings with sections
+        for (String scheduleItem : courseSchedules) {
+            String[] parts = scheduleItem.split("-"); // Split into courseNumber and section
+            String courseNumber = parts[0];
+
+            CourseOffer offer = courseSchedule.newCourseOffer(courseNumber);
+            if (offer != null) {
+                offer.generatSeats(30); // Each section can accommodate 30 students
+
+                // Assign faculty with the least number of courses
+                FacultyProfile selectedFaculty = getLeastLoadedFaculty(facultyLoadCount);
+                offer.AssignAsTeacher(selectedFaculty);
+                facultyLoadCount.put(selectedFaculty, facultyLoadCount.get(selectedFaculty) + 1);
+
+                // Store section information
+                offer.setSection(parts[1]);
+            }
+        }
+    }
+
+    private FacultyProfile getLeastLoadedFaculty(Map<FacultyProfile, Integer> facultyLoadCount) {
+        return facultyLoadCount.entrySet()
+                .stream()
+                .min(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+    public void registerStudents() {
+        CourseOffer[] offers = courseSchedule.getCourseOffers().toArray(new CourseOffer[0]);
+        int totalRegistrations = 0;
+
+        for (StudentProfile student : studentDirectory.getStudentlist()) {
+            CourseLoad courseLoad = student.newCourseLoad("Fall 2024");
+
+            // Each student must take:
+            // 1. One section of the core course (INFO5100)
+            // 2. At least one elective course
+            // Register for core course
+            CourseOffer coreSection = getAvailableCoreSection();
+            if (coreSection != null) {
+                courseLoad.registerStudentInClass(coreSection);
+                totalRegistrations++;
+            }
+
+            // Register for 1-2 elective courses
+            int numElectives = 1 + (int) (Math.random() * 2); // 1 or 2 electives
+            for (int i = 0; i < numElectives; i++) {
+                CourseOffer electiveOffer = getRandomElectiveOffer(offers);
+                if (electiveOffer != null) {
+                    courseLoad.registerStudentInClass(electiveOffer);
+                    totalRegistrations++;
+                }
+            }
+        }
+
+        // Verify minimum registration requirement
+        System.out.println("\nRegistration Statistics:");
+        System.out.println("Total course registrations: " + totalRegistrations);
+        if (totalRegistrations < 20) {
+            System.out.println("WARNING: Minimum registration requirement (20) not met!");
+        } else {
+            System.out.println("Registration requirement met successfully.");
+        }
+    }
+
+    private CourseOffer getAvailableCoreSection() {
+        return courseSchedule.getCourseOffers().stream()
+                .filter(offer -> offer.getCourse().isCore() && offer.getEmptySeat() != null)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private CourseOffer getRandomElectiveOffer(CourseOffer[] offers) {
+        List<CourseOffer> availableElectives = Arrays.stream(offers)
+                .filter(offer -> !offer.getCourse().isCore() && offer.getEmptySeat() != null)
+                .collect(Collectors.toList());
+
+        if (availableElectives.isEmpty()) {
+            return null;
+        }
+
+        int randomIndex = (int) (Math.random() * availableElectives.size());
+        return availableElectives.get(randomIndex);
+    }
 }
